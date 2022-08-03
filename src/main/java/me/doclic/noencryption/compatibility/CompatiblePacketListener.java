@@ -2,11 +2,11 @@ package me.doclic.noencryption.compatibility;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.*;
 import net.minecraft.network.protocol.game.ClientboundPlayerChatPacket;
-import net.minecraft.util.Crypt.SaltSignaturePair;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public class CompatiblePacketListener {
 
@@ -14,16 +14,30 @@ public class CompatiblePacketListener {
 
     public Object writePacket(ChannelHandlerContext channelHandlerContext, Object packet, ChannelPromise promise) {
         if (packet instanceof final ClientboundPlayerChatPacket clientboundPlayerChatPacket) {
-            final Optional<Component> unsignedContent = clientboundPlayerChatPacket.unsignedContent();
+            // Code partially by atenfyr https://github.com/atenfyr
+            final Optional<Component> unsignedContent = clientboundPlayerChatPacket.message().unsignedContent();
+            final ChatMessageContent signedContent = clientboundPlayerChatPacket.message().signedContent();
+            final SignedMessageBody signedBody = clientboundPlayerChatPacket.message().signedBody();
+            final ChatType.BoundNetwork chatType = clientboundPlayerChatPacket.chatType();
 
             // recreate a new packet
             return new ClientboundPlayerChatPacket(
-                    unsignedContent.orElse(clientboundPlayerChatPacket.signedContent()), // use unsigned content if available, this is the signed content field
-                    unsignedContent, // unsigned content field
-                    clientboundPlayerChatPacket.typeId(),
-                    clientboundPlayerChatPacket.sender(),
-                    clientboundPlayerChatPacket.timeStamp(),
-                    new SaltSignaturePair(0, new byte[0])); // salt signature field
+                    new PlayerChatMessage(
+                            new SignedMessageHeader(
+                                    new MessageSignature(new byte[0]),
+                                    new UUID(0,0)),
+                            new MessageSignature(new byte[0]),
+                            new SignedMessageBody(
+                                    new ChatMessageContent(
+                                            signedContent.plain(),
+                                            signedContent.decorated()),
+                                    signedBody.timeStamp(),
+                                    0,
+                                    signedBody.lastSeen()),
+                            unsignedContent,
+                            new FilterMask(0)
+                    ),
+                    chatType);
         }
 
         return packet;
