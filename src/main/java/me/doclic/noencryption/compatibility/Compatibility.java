@@ -17,7 +17,7 @@ public class Compatibility {
         Compatibility.plugin = plugin;
 
         // 1.19 is "1.19-R0.1-SNAPSHOT"
-        Compatibility.compatibleVersion = "1.19-R0.1-SNAPSHOT";
+        Compatibility.compatibleVersion = "1.19.1-R0.1-SNAPSHOT";
 
         try {
             bukkitVersion = Bukkit.getBukkitVersion(); // Gets the server version displayable to a user
