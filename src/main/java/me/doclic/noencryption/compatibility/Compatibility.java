@@ -1,5 +1,6 @@
 package me.doclic.noencryption.compatibility;
 
+import me.doclic.noencryption.NoEncryption;
 import org.bukkit.Bukkit;
 import me.doclic.noencryption.compatibility.v1_19_R1.*;
 
@@ -28,7 +29,7 @@ public class Compatibility {
             SERVER_VERSION = null;
         }
 
-        Bukkit.getLogger().info("Your server is running version " + MINECRAFT_VERSION);
+        NoEncryption.getPlugin().getLogger().info("Your server is running version " + MINECRAFT_VERSION);
 
         if (MINECRAFT_VERSION.equals(COMPATIBLE_MINECRAFT_VERSION)) {
 

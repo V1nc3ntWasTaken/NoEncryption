@@ -6,8 +6,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class NoEncryption extends JavaPlugin {
 
+    static NoEncryption PLUGIN;
+
     @Override
     public void onEnable() {
+
+        PLUGIN = this;
 
         if (Compatibility.SERVER_COMPATIBLE) {
 
@@ -26,5 +30,9 @@ public final class NoEncryption extends JavaPlugin {
             Bukkit.getPluginManager().disablePlugin(this);
         }
 
+    }
+
+    public static NoEncryption getPlugin() {
+        return PLUGIN;
     }
 }
