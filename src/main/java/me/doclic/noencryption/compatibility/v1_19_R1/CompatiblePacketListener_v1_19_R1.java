@@ -21,7 +21,7 @@ public class CompatiblePacketListener_v1_19_R1 implements CompatiblePacketListen
 
             // recreate a new packet
             return new ClientboundPlayerChatPacket(
-                    unsignedContent.orElse(clientboundPlayerChatPacket.signedContent()), // use unsigned content if available, this is the signed content field
+                    unsignedContent.orElse(null), // use unsigned content if available
                     unsignedContent, // unsigned content field
                     clientboundPlayerChatPacket.typeId(),
                     clientboundPlayerChatPacket.sender(),
