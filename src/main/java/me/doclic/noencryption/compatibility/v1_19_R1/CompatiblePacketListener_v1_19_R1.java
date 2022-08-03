@@ -12,10 +12,10 @@ import java.util.Optional;
 public class CompatiblePacketListener_v1_19_R1 implements CompatiblePacketListener {
 
     @Override
-    public Object readPacket(ChannelHandlerContext channelHandlerContext, Object packet) throws Exception { return packet; }
+    public Object readPacket(ChannelHandlerContext channelHandlerContext, Object packet) { return packet; }
 
     @Override
-    public Object writePacket(ChannelHandlerContext channelHandlerContext, Object packet, ChannelPromise promise) throws Exception {
+    public Object writePacket(ChannelHandlerContext channelHandlerContext, Object packet, ChannelPromise promise) {
         if (packet instanceof final ClientboundPlayerChatPacket clientboundPlayerChatPacket) {
             final Optional<Component> unsignedContent = clientboundPlayerChatPacket.unsignedContent();
 
@@ -27,7 +27,7 @@ public class CompatiblePacketListener_v1_19_R1 implements CompatiblePacketListen
                     clientboundPlayerChatPacket.sender(),
                     clientboundPlayerChatPacket.timeStamp(),
                     new SaltSignaturePair(0, new byte[0])); // salt signature field
-            }
+        }
 
         return packet;
 
