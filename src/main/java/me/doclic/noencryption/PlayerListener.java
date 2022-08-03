@@ -5,7 +5,7 @@ import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.ChannelPromise;
-import me.doclic.noencryption.compatibility.v1_19_R1.*;
+import me.doclic.noencryption.compatibility.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -19,13 +19,13 @@ public class PlayerListener implements Listener {
     public void onPlayerJoin (PlayerJoinEvent e) {
 
         final Player player = e.getPlayer();
-        final ChannelPipeline pipeline = new CompatiblePlayer_v1_19_R1().getChannel(player).pipeline();
+        final ChannelPipeline pipeline = new CompatiblePlayer().getChannel(player).pipeline();
         pipeline.addBefore("packet_handler", player.getUniqueId().toString(), new ChannelDuplexHandler() {
 
             @Override
             public void channelRead(ChannelHandlerContext channelHandlerContext, Object packet) throws Exception {
 
-                Object newPacket = new CompatiblePacketListener_v1_19_R1().readPacket(channelHandlerContext, packet);
+                Object newPacket = new CompatiblePacketListener().readPacket(channelHandlerContext, packet);
                 super.channelRead(channelHandlerContext, newPacket);
 
             }
@@ -33,7 +33,7 @@ public class PlayerListener implements Listener {
             @Override
             public void write(ChannelHandlerContext channelHandlerContext, Object packet, ChannelPromise promise) throws Exception {
 
-                Object newPacket = new CompatiblePacketListener_v1_19_R1().writePacket(channelHandlerContext, packet, promise);
+                Object newPacket = new CompatiblePacketListener().writePacket(channelHandlerContext, packet, promise);
                 super.write(channelHandlerContext, newPacket, promise);
 
             }
@@ -46,7 +46,7 @@ public class PlayerListener implements Listener {
     public void onPlayerQuit (PlayerQuitEvent e) {
 
         final Player player = e.getPlayer();
-        final Channel channel = new CompatiblePlayer_v1_19_R1().getChannel(player);
+        final Channel channel = new CompatiblePlayer().getChannel(player);
         channel.eventLoop().submit(() -> channel.pipeline().remove(player.getUniqueId().toString()));
 
     }

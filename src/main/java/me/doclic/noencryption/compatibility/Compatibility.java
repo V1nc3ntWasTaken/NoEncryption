@@ -5,30 +5,39 @@ import org.bukkit.Bukkit;
 
 public class Compatibility {
 
-    public static final boolean SERVER_COMPATIBLE;
-    public static String MINECRAFT_VERSION, SERVER_VERSION;
+    protected static NoEncryption plugin;
 
-    public static final String COMPATIBLE_MINECRAFT_VERSION;
+    protected static String compatibleVersion;
+    protected static String bukkitVersion;
+    protected static String minecraftVersion;
 
-    static {
+    protected static boolean compatible;
 
-        COMPATIBLE_MINECRAFT_VERSION = "1.19-R0.1-SNAPSHOT";
+    public static void initialize(NoEncryption plugin) {
+        Compatibility.plugin = plugin;
+
+        // 1.19 is "1.19-R0.1-SNAPSHOT"
+        Compatibility.compatibleVersion = "1.19-R0.1-SNAPSHOT";
 
         try {
-
-            MINECRAFT_VERSION = Bukkit.getBukkitVersion(); // Gets the server version displayable to a user
-            SERVER_VERSION = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3]; // Gets the server version
-
-
+            bukkitVersion = Bukkit.getBukkitVersion(); // Gets the server version displayable to a user
+            minecraftVersion = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3]; // Gets the server version
         } catch (ArrayIndexOutOfBoundsException exception) {
-            MINECRAFT_VERSION = null;
-            SERVER_VERSION = null;
+            // This should never happen
+            bukkitVersion = null;
+            minecraftVersion = null;
         }
 
-        NoEncryption.getPlugin().getLogger().info("Your server is running version " + MINECRAFT_VERSION);
+        plugin.getLogger().info("Your server is running version " + bukkitVersion);
 
-        SERVER_COMPATIBLE = MINECRAFT_VERSION.equals(COMPATIBLE_MINECRAFT_VERSION);
-
+        compatible = bukkitVersion.equals(compatibleVersion);
     }
 
+    public static boolean checkCompatibility() {
+        return compatible;
+    }
+
+    public static String getBukkitVersion() {
+        return bukkitVersion;
+    }
 }

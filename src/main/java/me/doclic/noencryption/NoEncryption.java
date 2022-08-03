@@ -6,14 +6,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class NoEncryption extends JavaPlugin {
 
-    static NoEncryption PLUGIN;
+    static NoEncryption plugin;
 
     @Override
     public void onEnable() {
+        plugin = this;
 
-        PLUGIN = this;
+        Compatibility.initialize(plugin);
 
-        if (Compatibility.SERVER_COMPATIBLE) {
+        if (Compatibility.checkCompatibility()) {
 
             Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
 
@@ -25,7 +26,7 @@ public final class NoEncryption extends JavaPlugin {
         } else {
 
             getLogger().severe("Failed to setup NoEncryption's compatibility!");
-            getLogger().severe("Your server version (" + Compatibility.MINECRAFT_VERSION + ") is not compatible with this plugin!");
+            getLogger().severe("Your server version (" + Compatibility.getBukkitVersion() + ") is not compatible with this plugin!");
 
             Bukkit.getPluginManager().disablePlugin(this);
         }
@@ -33,6 +34,6 @@ public final class NoEncryption extends JavaPlugin {
     }
 
     public static NoEncryption getPlugin() {
-        return PLUGIN;
+        return plugin;
     }
 }
