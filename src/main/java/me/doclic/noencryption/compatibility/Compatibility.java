@@ -2,12 +2,8 @@ package me.doclic.noencryption.compatibility;
 
 import me.doclic.noencryption.NoEncryption;
 import org.bukkit.Bukkit;
-import me.doclic.noencryption.compatibility.v1_19_R1.*;
 
 public class Compatibility {
-
-    public static final CompatiblePlayer COMPATIBLE_PLAYER;
-    public static final CompatiblePacketListener COMPATIBLE_PACKET_LISTENER;
 
     public static final boolean SERVER_COMPATIBLE;
     public static String MINECRAFT_VERSION, SERVER_VERSION;
@@ -31,21 +27,7 @@ public class Compatibility {
 
         NoEncryption.getPlugin().getLogger().info("Your server is running version " + MINECRAFT_VERSION);
 
-        if (MINECRAFT_VERSION.equals(COMPATIBLE_MINECRAFT_VERSION)) {
-
-            COMPATIBLE_PLAYER = new CompatiblePlayer_v1_19_R1();
-            COMPATIBLE_PACKET_LISTENER = new CompatiblePacketListener_v1_19_R1();
-
-            SERVER_COMPATIBLE = true;
-
-        } else {
-
-            COMPATIBLE_PLAYER = null;
-            COMPATIBLE_PACKET_LISTENER = null;
-
-            SERVER_COMPATIBLE = false;
-
-        }
+        SERVER_COMPATIBLE = MINECRAFT_VERSION.equals(COMPATIBLE_MINECRAFT_VERSION);
 
     }
 
