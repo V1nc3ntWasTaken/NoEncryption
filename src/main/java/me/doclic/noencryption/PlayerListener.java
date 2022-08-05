@@ -1,11 +1,8 @@
 package me.doclic.noencryption;
 
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelDuplexHandler;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelPipeline;
-import io.netty.channel.ChannelPromise;
-import me.doclic.noencryption.compatibility.*;
+import io.netty.channel.*;
+import me.doclic.noencryption.compatibility.CompatiblePacketListener;
+import me.doclic.noencryption.compatibility.CompatiblePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -20,7 +17,7 @@ public class PlayerListener implements Listener {
 
         final Player player = e.getPlayer();
         final ChannelPipeline pipeline = new CompatiblePlayer().getChannel(player).pipeline();
-        pipeline.addBefore("packet_handler", player.getUniqueId().toString(), new ChannelDuplexHandler() {
+        pipeline.addBefore("packet_handler", "no_encryption", new ChannelDuplexHandler() {
 
             @Override
             public void channelRead(ChannelHandlerContext channelHandlerContext, Object packet) throws Exception {
@@ -47,7 +44,7 @@ public class PlayerListener implements Listener {
 
         final Player player = e.getPlayer();
         final Channel channel = new CompatiblePlayer().getChannel(player);
-        channel.eventLoop().submit(() -> channel.pipeline().remove(player.getUniqueId().toString()));
+        channel.eventLoop().submit(() -> channel.pipeline().remove("no_encryption"));
 
     }
 
