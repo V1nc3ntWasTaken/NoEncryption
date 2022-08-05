@@ -1,0 +1,63 @@
+name: 🐞 Bug Report
+description: Report a bug for NoEncryption (Must be using V1nc3ntWasTaken's fork).
+body:
+  - type: checkboxes
+    attributes:
+      label: Is there an existing issue for this?
+      description: Please search to see if an issue already exists for the bug you encountered.
+      options:
+        - label: I have searched the existing issues and have not found a duplicate relating to my issue.
+          required: true
+  - type: checkboxes
+    attributes:
+      label: Are you using the latest version of NoEncryption (Must be using V1nc3ntWasTaken's fork)?
+      description: Please make sure you're using the latest version of NoEncryption as it's possible your issue has already been fixed.
+      options:
+        - label: I am using the latest version of MockBukkit.
+          required: true
+  - type: dropdown
+    id: ne-version
+    attributes:
+      label: NoEncryption Version
+      description: What NoEncryption version is your server running (Must be using V1nc3ntWasTaken's fork)?
+      options:
+        - 3.0
+        - 2.1
+  - type: dropdown
+    id: mv-version
+    attributes:
+      label: Minecraft Version
+      description: What Minecraft version is your server running?
+      options:
+        - 1.19.1
+        - 1.19
+    validations:
+      required: true
+  - type: textarea
+    id: fw-version
+    attributes:
+      label: Server Type
+      description: What server type and version are you running? Use the contents of /version
+    validations:
+      required: true
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Describe the bug
+      description: Describe the bug in as much detail as you can.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproducible Test
+      description: Please write a test that can reliably reproduce the bug. Include any plugins that you may interact with in the time span.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Anything else?
+      description: |
+        Links? References? Anything that will give us more context about the issue you are encountering!
+    validations:
+      required: false
