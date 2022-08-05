@@ -6,7 +6,7 @@
 
     <groupId>me.doclic</groupId>
     <artifactId>NoEncryption</artifactId>
-    <version>3.0</version>
+    <version>3.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>NoEncryption</name>
