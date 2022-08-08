@@ -13,7 +13,7 @@ body:
       label: Are you using the latest version of NoEncryption (Must be using V1nc3ntWasTaken's fork)?
       description: Please make sure you're using the latest version of NoEncryption as it's possible your issue has already been fixed.
       options:
-        - label: I am using the latest version of MockBukkit.
+        - label: I am using the latest version of NoEncryption for my server version.
           required: true
   - type: dropdown
     id: ne-version
@@ -21,6 +21,8 @@ body:
       label: NoEncryption Version
       description: What NoEncryption version is your server running (Must be using V1nc3ntWasTaken's fork)?
       options:
+        - 3.2
+        - 3.1-SNAPSHOT
         - 3.0
         - 2.1
   - type: dropdown
@@ -29,6 +31,7 @@ body:
       label: Minecraft Version
       description: What Minecraft version is your server running?
       options:
+        - 1.19.2
         - 1.19.1
         - 1.19
     validations:
