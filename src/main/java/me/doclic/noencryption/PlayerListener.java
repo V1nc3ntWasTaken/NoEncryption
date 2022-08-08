@@ -23,7 +23,7 @@ public class PlayerListener implements Listener {
             for (final Player player : Bukkit.getOnlinePlayers()) {
 
                 final ChannelPipeline pipeline = new CompatiblePlayer().getChannel(player).pipeline();
-                pipeline.addBefore("packet_handler", player.getUniqueId().toString(), new ChannelDuplexHandler() {
+                pipeline.addBefore("packet_handler", "no_encryption_interceptor", new ChannelDuplexHandler() {
 
                     @Override
                     public void channelRead(ChannelHandlerContext channelHandlerContext, Object packet) throws Exception {
@@ -56,7 +56,7 @@ public class PlayerListener implements Listener {
 
             final Player player = e.getPlayer();
             final ChannelPipeline pipeline = new CompatiblePlayer().getChannel(player).pipeline();
-            pipeline.addBefore("packet_handler", player.getUniqueId().toString(), new ChannelDuplexHandler() {
+            pipeline.addBefore("packet_handler", "no_encryption_interceptor", new ChannelDuplexHandler() {
 
                 @Override
                 public void channelRead(ChannelHandlerContext channelHandlerContext, Object packet) throws Exception {
@@ -87,7 +87,7 @@ public class PlayerListener implements Listener {
 
             final Player player = e.getPlayer();
             final Channel channel = new CompatiblePlayer().getChannel(player);
-            channel.eventLoop().submit(() -> channel.pipeline().remove(player.getUniqueId().toString()));
+            channel.eventLoop().submit(() -> channel.pipeline().remove("no_encryption_interceptor"));
 
         }
 
@@ -100,7 +100,7 @@ public class PlayerListener implements Listener {
             for (final Player player : Bukkit.getOnlinePlayers()) {
 
                 final Channel channel = new CompatiblePlayer().getChannel(player);
-                channel.eventLoop().submit(() -> channel.pipeline().remove(player.getUniqueId().toString()));
+                channel.eventLoop().submit(() -> channel.pipeline().remove("no_encryption_interceptor"));
 
             }
 
