@@ -23,6 +23,8 @@ public final class NoEncryption extends JavaPlugin {
 
         if (Compatibility.checkCompatibility()) {
 
+            PlayerListener.startup();
+
             Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
 
             getLogger().info("Compatibility successful!");
@@ -82,6 +84,12 @@ public final class NoEncryption extends JavaPlugin {
 
     @Override
     public void onDisable() {
+
+        if (NoEncryption.isReady()) {
+
+            PlayerListener.shutdown();
+
+        }
 
         VersionDownloader.shutdown();
 
