@@ -44,9 +44,13 @@ public class CompatiblePacketListener {
         }
 
         if (packet instanceof final ClientboundSystemChatPacket clientboundSystemChatPacket) {
-            return new ClientboundSystemChatPacket(
-                    ComponentSerializer.parse(clientboundSystemChatPacket.content()),
-                    clientboundSystemChatPacket.overlay());
+            if (clientboundSystemChatPacket.content() == null) {
+                return clientboundSystemChatPacket;
+            } else {
+                return new ClientboundSystemChatPacket(
+                        ComponentSerializer.parse(clientboundSystemChatPacket.content()),
+                        clientboundSystemChatPacket.overlay());
+            }
         }
 
         if (packet instanceof final ClientboundPlayerChatHeaderPacket clientboundPlayerChatHeaderPacket) {
