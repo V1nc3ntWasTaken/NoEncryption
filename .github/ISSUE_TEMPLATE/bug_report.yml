@@ -1,6 +1,12 @@
 name: 🐞 Bug Report
 description: Report a bug for NoEncryption (Must be using V1nc3ntWasTaken's fork).
 body:
+  - type: markdown
+    attributes:
+      value: |
+        ## NoEncryption Bug Report
+        
+        Before submitting a bug report issue, please make sure you are on the [latest release](https://github.com/V1nc3ntWasTaken/NoEncryption/releases) and have the proper jar for the version you are running (Ex. <code>NoEncryption-v4.0--1.19.2_only.jar</code> runs **1.19.2 only**), and try executing the bugged behavior once again.
   - type: checkboxes
     attributes:
       label: Is there an existing issue for this?
@@ -13,7 +19,7 @@ body:
       label: Are you using the latest version of NoEncryption (Must be using V1nc3ntWasTaken's fork)?
       description: Please make sure you're using the latest version of NoEncryption as it's possible your issue has already been fixed.
       options:
-        - label: I am using the latest version of NoEncryption for my server version.
+        - label: I am using the latest version of NoEncryption compatible with my server version.
           required: true
   - type: dropdown
     id: ne-version
@@ -27,6 +33,9 @@ body:
         - 3.1-SNAPSHOT
         - 3.0
         - 2.1
+        - Other (Please specify in Server Type)
+    validations:
+      required: true
   - type: dropdown
     id: mv-version
     attributes:
@@ -36,14 +45,15 @@ body:
         - 1.19.2
         - 1.19.1
         - 1.19
-        - Other (Please specify)
+        - Other (Please specify in Server Type)
     validations:
       required: true
   - type: textarea
-    id: fw-version
+    id: versions
     attributes:
       label: Server Type
       description: What server type and version are you running? Use the contents of /version
+      placeholder: Purpur build 1756 for 1.19.2; NoEncryption 4.0 for 1.19.2
     validations:
       required: true
   - type: textarea
