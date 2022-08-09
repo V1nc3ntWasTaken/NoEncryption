@@ -12,6 +12,8 @@ public final class NoEncryption extends JavaPlugin {
     public void onEnable() {
         plugin = this;
 
+        saveDefaultConfig();
+
         Compatibility.initialize(plugin);
 
         if (Compatibility.checkCompatibility()) {

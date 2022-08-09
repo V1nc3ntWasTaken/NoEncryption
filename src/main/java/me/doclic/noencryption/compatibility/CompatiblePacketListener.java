@@ -2,10 +2,12 @@ package me.doclic.noencryption.compatibility;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
+import me.doclic.noencryption.NoEncryption;
 import net.md_5.bungee.chat.ComponentSerializer;
 import net.minecraft.network.chat.*;
 import net.minecraft.network.protocol.game.ClientboundPlayerChatHeaderPacket;
 import net.minecraft.network.protocol.game.ClientboundPlayerChatPacket;
+import net.minecraft.network.protocol.game.ClientboundServerDataPacket;
 import net.minecraft.network.protocol.game.ClientboundSystemChatPacket;
 
 import java.util.Optional;
@@ -62,6 +64,19 @@ public class CompatiblePacketListener {
                     clientboundPlayerChatHeaderPacket.bodyDigest()
             );
         }
+
+        if (packet instanceof final ClientboundServerDataPacket clientboundServerDataPacket) {
+            if (NoEncryption.getPlugin().getConfig().getBoolean("disable-unsecure-banner", true)) {
+                // recreate a new packet
+                return new ClientboundServerDataPacket(
+                        clientboundServerDataPacket.getMotd().orElse(null),
+                        clientboundServerDataPacket.getIconBase64().orElse(null),
+                        clientboundServerDataPacket.previewsChat(),
+                        true
+                );
+            }
+        }
+
 
         return packet;
 
