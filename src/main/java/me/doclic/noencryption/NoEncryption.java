@@ -19,6 +19,8 @@ public final class NoEncryption extends JavaPlugin {
 
         saveDefaultConfig();
 
+        PlayerListener.startup();
+
         Compatibility.initialize(plugin);
 
         if (Compatibility.checkCompatibility()) {
@@ -82,6 +84,12 @@ public final class NoEncryption extends JavaPlugin {
 
     @Override
     public void onDisable() {
+
+        if (NoEncryption.isReady()) {
+
+            PlayerListener.shutdown();
+
+        }
 
         VersionDownloader.shutdown();
 
