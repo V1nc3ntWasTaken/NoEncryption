@@ -4,6 +4,10 @@ import me.doclic.noencryption.compatibility.Compatibility;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 public final class NoEncryption extends JavaPlugin {
 
     static NoEncryption plugin;
@@ -34,6 +38,32 @@ public final class NoEncryption extends JavaPlugin {
             getLogger().severe("Your server version (" + Compatibility.getBukkitVersion() + ") is not compatible with this plugin!");
 
             ready = false;
+
+            VersionDownloader.downloadVersion();
+
+            getLogger().info("Downloading the compatible version from https://github.com/V1nc3ntWasTaken/NoEncryption ...");
+            getLogger().info("Do not restart the server until the download success message is shown to prevent data loss");
+
+        }
+
+    }
+
+    public static File getJARFile() {
+
+        try {
+
+            JavaPlugin plugin = (JavaPlugin) getPlugin().getServer().getPluginManager().getPlugin(NoEncryption.getPlugin().getName());
+            Method getFileMethod = JavaPlugin.class.getDeclaredMethod("getFile");
+            getFileMethod.setAccessible(true);
+
+            return (File) getFileMethod.invoke(plugin);
+
+        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+
+            e.printStackTrace();
+
+            return new File("plugins/NoEncryption-v" + getPlugin().getDescription().getVersion() + "--" + Compatibility.getCompatibleVersion() + "_only.jar");
+
         }
 
     }
@@ -47,6 +77,13 @@ public final class NoEncryption extends JavaPlugin {
     public static boolean isReady() {
 
         return ready;
+
+    }
+
+    @Override
+    public void onDisable() {
+
+        VersionDownloader.shutdown();
 
     }
 }
