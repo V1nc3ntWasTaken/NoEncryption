@@ -15,36 +15,44 @@ public class PlayerListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerJoin (PlayerJoinEvent e) {
 
-        final Player player = e.getPlayer();
-        final ChannelPipeline pipeline = new CompatiblePlayer().getChannel(player).pipeline();
-        pipeline.addBefore("packet_handler", "no_encryption", new ChannelDuplexHandler() {
+        if (NoEncryption.isReady()) {
 
-            @Override
-            public void channelRead(ChannelHandlerContext channelHandlerContext, Object packet) throws Exception {
+            final Player player = e.getPlayer();
+            final ChannelPipeline pipeline = new CompatiblePlayer().getChannel(player).pipeline();
+            pipeline.addBefore("packet_handler", "no_encryption", new ChannelDuplexHandler() {
 
-                Object newPacket = new CompatiblePacketListener().readPacket(channelHandlerContext, packet);
-                super.channelRead(channelHandlerContext, newPacket);
+                @Override
+                public void channelRead(ChannelHandlerContext channelHandlerContext, Object packet) throws Exception {
 
-            }
+                    Object newPacket = new CompatiblePacketListener().readPacket(channelHandlerContext, packet);
+                    super.channelRead(channelHandlerContext, newPacket);
 
-            @Override
-            public void write(ChannelHandlerContext channelHandlerContext, Object packet, ChannelPromise promise) throws Exception {
+                }
 
-                Object newPacket = new CompatiblePacketListener().writePacket(channelHandlerContext, packet, promise);
-                super.write(channelHandlerContext, newPacket, promise);
+                @Override
+                public void write(ChannelHandlerContext channelHandlerContext, Object packet, ChannelPromise promise) throws Exception {
 
-            }
+                    Object newPacket = new CompatiblePacketListener().writePacket(channelHandlerContext, packet, promise);
+                    super.write(channelHandlerContext, newPacket, promise);
 
-        });
+                }
+
+            });
+
+        }
 
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerQuit (PlayerQuitEvent e) {
 
-        final Player player = e.getPlayer();
-        final Channel channel = new CompatiblePlayer().getChannel(player);
-        channel.eventLoop().submit(() -> channel.pipeline().remove("no_encryption"));
+        if (NoEncryption.isReady()) {
+
+            final Player player = e.getPlayer();
+            final Channel channel = new CompatiblePlayer().getChannel(player);
+            channel.eventLoop().submit(() -> channel.pipeline().remove("no_encryption"));
+
+        }
 
     }
 
