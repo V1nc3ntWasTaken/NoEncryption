@@ -76,8 +76,12 @@ public class VersionDownloader {
 
         try {
 
-            if (NoEncryption.getJARFile().exists() && !NoEncryption.getJARFile().delete()) {
-                throw new IOException();
+            if (getDeleteOnShutdown()) {
+
+                if (NoEncryption.getJARFile().exists() && !NoEncryption.getJARFile().delete()) {
+                    throw new IOException();
+                }
+
             }
 
         } catch (IOException e) {
