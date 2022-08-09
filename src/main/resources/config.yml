@@ -1,0 +1,2 @@
+# Disables the unsecured message banner for users joining the server
+disable-unsecure-banner: true
