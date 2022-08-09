@@ -9,6 +9,7 @@ public class Compatibility {
 
     protected static String compatibleVersion;
     protected static String bukkitVersion;
+    protected static String formattedBukkitVersion;
     protected static String minecraftVersion;
 
     protected static boolean compatible;
@@ -21,10 +22,12 @@ public class Compatibility {
 
         try {
             bukkitVersion = Bukkit.getBukkitVersion(); // Gets the server version displayable to a user
+            formattedBukkitVersion = bukkitVersion.split("-")[0];
             minecraftVersion = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3]; // Gets the server version
         } catch (ArrayIndexOutOfBoundsException exception) {
             // This should never happen
             bukkitVersion = null;
+            formattedBukkitVersion = null;
             minecraftVersion = null;
         }
 
@@ -33,11 +36,19 @@ public class Compatibility {
         compatible = bukkitVersion.equals(compatibleVersion);
     }
 
+    public static String getCompatibleVersion() {
+        return compatibleVersion;
+    }
+
     public static boolean checkCompatibility() {
         return compatible;
     }
 
     public static String getBukkitVersion() {
         return bukkitVersion;
+    }
+
+    public static String getFormattedBukkitVersion() {
+        return formattedBukkitVersion;
     }
 }
