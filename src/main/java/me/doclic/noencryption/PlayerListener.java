@@ -52,7 +52,7 @@ public class PlayerListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerJoin (PlayerJoinEvent e) {
 
-        if (NoEncryption.isReady()) {
+        if (NoEncryption.isReady() && e.getPlayer().isOnline()) {
 
             final Player player = e.getPlayer();
             final ChannelPipeline pipeline = new CompatiblePlayer().getChannel(player).pipeline();
