@@ -1,6 +1,7 @@
 package me.doclic.noencryption.compatibility;
 
 import me.doclic.noencryption.NoEncryption;
+import me.doclic.noencryption.utils.Messaging;
 import org.bukkit.Bukkit;
 
 public class Compatibility {
@@ -31,7 +32,7 @@ public class Compatibility {
             minecraftVersion = null;
         }
 
-        plugin.getLogger().info("Your server is running version " + bukkitVersion);
+        new Messaging().sendConsolePluginInfoMessage(Bukkit.getConsoleSender(), "Your server is running version " + bukkitVersion + ".", true, true);
 
         compatible = bukkitVersion.equals(compatibleVersion);
     }
