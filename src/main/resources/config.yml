@@ -1,0 +1,14 @@
+# The prefix for the plugin to use for player notifications (Plugin messages, not modified player messages)
+player-prefix: '&f[&9No&1Encryption&f] '
+
+# Configuration settings for the updater
+update-config:
+
+  # The URL to check for the latest stable version
+  latest-check-url: 'https://raw.githubusercontent.com/V1nc3ntWasTaken/NoEncryption/main/latest'
+
+  # The URL to download jars from. %VERSION% reflects the version that the plugin should use. %FILE% reflects the file name.
+  file-download-url: 'https://github.com/V1nc3ntWasTaken/NoEncryption/releases/download/%VERSION%/%FILE%'
+
+  # Alerts operators that the plugin is not enabled
+  alert-ops: true
