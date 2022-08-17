@@ -1,0 +1,24 @@
+name: NoEncryption
+version: '${project.version}'
+main: me.doclic.noencryption.NoEncryption
+api-version: 1.19
+authors: [ Doclic, V1nc3ntWasTaken ]
+description: Strips signatures from player messages
+commands:
+  noencryption:
+    aliases:
+      - ne
+    permission: noencryption.command.noencryption
+permissions:
+  noencryption.command.*:
+    children:
+      - noencryption.command.noencryption
+      - noencryption.command.download
+      - noencryption.command.reload
+    default: op
+  noencryption.command.noencryption:
+    default: op
+  noencryption.command.download:
+    default: op
+  noencryption.command.reload:
+    default: op

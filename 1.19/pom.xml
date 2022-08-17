@@ -4,33 +4,33 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>me.doclic</groupId>
-    <artifactId>NoEncryption</artifactId>
-    <version>4.0</version>
-    <packaging>pom</packaging>
+    <artifactId>NoEncryption-${compatibleVersion}</artifactId>
+    <version>${project.parent.version}</version>
+    <packaging>jar</packaging>
 
-    <name>NoEncryption</name>
+    <name>NoEncryption-${compatibleVersion}</name>
     <description>Makes every player message a system message</description>
 
-    <modules>
-        <module>1.19</module>
-        <module>1.19.1</module>
-        <module>1.19.2</module>
-    </modules>
+    <parent>
+        <groupId>me.doclic</groupId>
+        <artifactId>NoEncryption</artifactId>
+        <version>4.0</version>
+    </parent>
 
     <properties>
+        <compatibleVersion>1.19</compatibleVersion>
         <java.version>1.17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <!--<build>
+    <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.2.0</version>
                 <configuration>
-                    <finalName>${project.artifactId}-v${project.version}&#45;&#45;${compatibleVersion}_only</finalName>
+                    <finalName>${parent.artifactId}-v${project.version}--${compatibleVersion}_only</finalName>
                 </configuration>
             </plugin>
             <plugin>
@@ -54,6 +54,7 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <shadedArtifactId>NoEncryption</shadedArtifactId>
                         </configuration>
                     </execution>
                 </executions>
@@ -70,11 +71,13 @@
                         </goals>
                         <id>remap-obf</id>
                         <configuration>
-                            <srgIn>org.spigotmc:minecraft-server:1.19.2-R0.1-SNAPSHOT:txt:maps-mojang</srgIn>
+                            <srgIn>org.spigotmc:minecraft-server:1.19-R0.1-SNAPSHOT:txt:maps-mojang</srgIn>
                             <reverse>true</reverse>
-                            <remappedDependencies>org.spigotmc:spigot:1.19.2-R0.1-SNAPSHOT:jar:remapped-mojang</remappedDependencies>
+                            <remappedDependencies>org.spigotmc:spigot:1.19-R0.1-SNAPSHOT:jar:remapped-mojang</remappedDependencies>
                             <remappedArtifactAttached>true</remappedArtifactAttached>
+                            <remappedArtifactId>${parent.artifactId}</remappedArtifactId>
                             <remappedClassifierName>remapped-obf</remappedClassifierName>
+                            <finalName>${parent.artifactId}-v${project.version}--${compatibleVersion}_only-remapped_obf</finalName>
                         </configuration>
                     </execution>
                     <execution>
@@ -84,9 +87,10 @@
                         </goals>
                         <id>remap-spigot</id>
                         <configuration>
-                            <inputFile>${project.build.directory}/${project.artifactId}-${project.version}-remapped-obf.jar</inputFile>
-                            <srgIn>org.spigotmc:minecraft-server:1.19.2-R0.1-SNAPSHOT:csrg:maps-spigot</srgIn>
-                            <remappedDependencies>org.spigotmc:spigot:1.19.2-R0.1-SNAPSHOT:jar:remapped-obf</remappedDependencies>
+                            <inputFile>${project.build.directory}/${parent.artifactId}-v${project.version}--${compatibleVersion}_only-remapped_obf.jar</inputFile>
+                            <srgIn>org.spigotmc:minecraft-server:1.19-R0.1-SNAPSHOT:csrg:maps-spigot</srgIn>
+                            <remappedDependencies>org.spigotmc:spigot:1.19-R0.1-SNAPSHOT:jar:remapped-obf</remappedDependencies>
+                            <finalName>${parent.artifactId}-v${project.version}--${compatibleVersion}_only-remapped</finalName>
                         </configuration>
                     </execution>
                 </executions>
@@ -98,9 +102,9 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
-    </build>-->
+    </build>
 
-    <!--<repositories>
+    <repositories>
         <repository>
             <id>papermc</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
@@ -115,15 +119,15 @@
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.19.2-R0.1-SNAPSHOT</version>
+            <version>1.19-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
-            <version>1.19.2-R0.1-SNAPSHOT</version>
+            <version>1.19-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
             <classifier>remapped-mojang</classifier>
         </dependency>
-    </dependencies>-->
+    </dependencies>
 </project>
