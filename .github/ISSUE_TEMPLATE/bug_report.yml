@@ -27,6 +27,7 @@ body:
       label: NoEncryption Version
       description: What NoEncryption version is your server running (Must be using V1nc3ntWasTaken's fork)?
       options:
+        - 4.1
         - 4.0
         - 3.2
         - 3.1
