@@ -89,7 +89,7 @@
                             <inputFile>${project.build.directory}/${parent.artifactId}-v${project.version}--${compatibleVersion}_only-remapped_obf.jar</inputFile>
                             <srgIn>org.spigotmc:minecraft-server:1.19.1-R0.1-SNAPSHOT:csrg:maps-spigot</srgIn>
                             <remappedDependencies>org.spigotmc:spigot:1.19.1-R0.1-SNAPSHOT:jar:remapped-obf</remappedDependencies>
-                            <finalName>${parent.artifactId}-v${project.version}--${compatibleVersion}_only-remapped</finalName>
+                            <finalName>${parent.artifactId}-v${project.version}--${compatibleVersion}_only<!-- -remapped--></finalName>
                         </configuration>
                     </execution>
                 </executions>
