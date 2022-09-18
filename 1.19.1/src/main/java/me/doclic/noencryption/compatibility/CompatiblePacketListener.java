@@ -3,12 +3,12 @@ package me.doclic.noencryption.compatibility;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
 import me.doclic.noencryption.NoEncryption;
-import net.md_5.bungee.chat.ComponentSerializer;
 import net.minecraft.network.chat.*;
 import net.minecraft.network.protocol.game.ClientboundPlayerChatHeaderPacket;
 import net.minecraft.network.protocol.game.ClientboundPlayerChatPacket;
 import net.minecraft.network.protocol.game.ClientboundServerDataPacket;
 import net.minecraft.network.protocol.game.ClientboundSystemChatPacket;
+import org.bukkit.craftbukkit.v1_19_R1.util.CraftChatMessage;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -52,7 +52,7 @@ public class CompatiblePacketListener {
                     return clientboundSystemChatPacket;
                 } else {
                     return new ClientboundSystemChatPacket(
-                            ComponentSerializer.parse(clientboundSystemChatPacket.content()),
+                            CraftChatMessage.fromJSONOrNull(clientboundSystemChatPacket.content()),
                             clientboundSystemChatPacket.overlay());
                 }
             }
