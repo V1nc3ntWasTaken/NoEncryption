@@ -25,25 +25,47 @@ public class PlayerListener implements Listener {
             for (final Player player : Bukkit.getOnlinePlayers()) {
 
                 final ChannelPipeline pipeline = new CompatiblePlayer().getChannel(player).pipeline();
-                pipeline.addBefore("packet_handler", "no_encryption_interceptor", new ChannelDuplexHandler() {
+                if (pipeline.get("packet_handler") == null) {
+                    pipeline.addFirst("no_encryption_interceptor", new ChannelDuplexHandler() {
 
-                    @Override
-                    public void channelRead(ChannelHandlerContext channelHandlerContext, Object packet) throws Exception {
+                        @Override
+                        public void channelRead(ChannelHandlerContext channelHandlerContext, Object packet) throws Exception {
 
-                        Object newPacket = new CompatiblePacketListener().readPacket(channelHandlerContext, packet);
-                        super.channelRead(channelHandlerContext, newPacket);
+                            Object newPacket = new CompatiblePacketListener().readPacket(channelHandlerContext, packet);
+                            super.channelRead(channelHandlerContext, newPacket);
 
-                    }
+                        }
 
-                    @Override
-                    public void write(ChannelHandlerContext channelHandlerContext, Object packet, ChannelPromise promise) throws Exception {
+                        @Override
+                        public void write(ChannelHandlerContext channelHandlerContext, Object packet, ChannelPromise promise) throws Exception {
 
-                        Object newPacket = new CompatiblePacketListener().writePacket(channelHandlerContext, packet, promise);
-                        super.write(channelHandlerContext, newPacket, promise);
+                            Object newPacket = new CompatiblePacketListener().writePacket(channelHandlerContext, packet, promise);
+                            super.write(channelHandlerContext, newPacket, promise);
 
-                    }
+                        }
 
-                });
+                    });
+                } else {
+                    pipeline.addBefore("packet_handler", "no_encryption_interceptor", new ChannelDuplexHandler() {
+
+                        @Override
+                        public void channelRead(ChannelHandlerContext channelHandlerContext, Object packet) throws Exception {
+
+                            Object newPacket = new CompatiblePacketListener().readPacket(channelHandlerContext, packet);
+                            super.channelRead(channelHandlerContext, newPacket);
+
+                        }
+
+                        @Override
+                        public void write(ChannelHandlerContext channelHandlerContext, Object packet, ChannelPromise promise) throws Exception {
+
+                            Object newPacket = new CompatiblePacketListener().writePacket(channelHandlerContext, packet, promise);
+                            super.write(channelHandlerContext, newPacket, promise);
+
+                        }
+
+                    });
+                }
 
             }
 
