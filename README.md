@@ -1,7 +1,7 @@
-# NoEncryption
-NoEncryption is a very simple plugin designed that removes the signature from player messages. This means that your players won't be chat reported!  
-
 # The current repository is no longer being updated, and will be removed in the future. Please change your sources to [here](https://github.com/Doclic/NoEncryption), which I am currently overseeing.
+
+# NoEncryption
+NoEncryption is a very simple plugin designed that removes the signature from player messages. This means that your players won't be chat reported!
 
 ## Disclaimer
 This **is** a modified, remastered version of [Doclic's Original NoEncryption](https://github.com/Doclic/NoEncryption).
